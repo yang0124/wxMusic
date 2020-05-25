@@ -1,1 +1,9 @@
 /* miniprogram/pages/playlist/playlist.wxss */
+.carousel_img{
+  width: 100%
+}
+.playlist{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly
+}

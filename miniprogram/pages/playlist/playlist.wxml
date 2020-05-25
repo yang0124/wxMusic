@@ -1,2 +1,16 @@
 <!--miniprogram/pages/playlist/playlist.wxml-->
-<text>miniprogram/pages/playlist/playlist.wxml</text>
+<swiper indicator-dots='true' indicator-active-color="red" autoplay="true" interval="4000" duration="2000" circular="true">
+  <block wx:for="{{imgUlrl}}" wx:key="url">
+    <swiper-item>
+      <image src='{{item.url}}' mode="widthFix" class="carousel_img"></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="playlist">
+  <block wx:for="{{playlist}}" wx:key="id">
+    <x-playlist playlist='{{item}}'></x-playlist>
+  </block>
+</view>
+
+

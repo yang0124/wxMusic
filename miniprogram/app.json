@@ -3,13 +3,15 @@
     "pages/playlist/playlist",
     "pages/profile/profile",
     "pages/blog/blog",
-    "pages/demo/demo"
+    "pages/demo/demo",
+    "pages/musiclist/musiclist",
+    "pages/player/player"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarBackgroundColor": "#474747",
+    "navigationBarTitleText": "音乐",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

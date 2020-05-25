@@ -1,27 +1,34 @@
-// pages/demo/demo.js
+// pages/musiclist/musiclist.js
 Page({
-  
+
   /**
    * 页面的初始数据
    */
   data: {
-
+    musiclist:[],
+    musicInfo:{}
   },
-    
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-    
-  let p1 =new Promise((resolve,reject)=>{
-    console.log()
-  })
-
-
-   
-
-  
+      wx.cloud.callFunction({
+        name:"music",
+        data:{
+          playlistId: options.playlistId,
+          $url:"musiclist"
+        }
+      }).then(res=>{
+          let pl = res.result.playlist
+          this.setData({
+            musiclist:pl.tracks,
+            musicInfo:{
+              coverImgUrl: pl.coverImgUrl,
+              name:pl.name
+            }
+          })
+      })
   },
 
   /**

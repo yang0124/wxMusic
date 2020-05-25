@@ -1,27 +1,18 @@
-// pages/demo/demo.js
+// pages/player/player.js
 Page({
-  
+
   /**
    * 页面的初始数据
    */
   data: {
 
   },
-    
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-    
-  let p1 =new Promise((resolve,reject)=>{
-    console.log()
-  })
-
-
-   
-
-  
+    console.log(options)
   },
 
   /**
