@@ -53,10 +53,10 @@ exports.main = async (event, context) => {
   }
   
    //这是在朝数据库中加入数据
-   for(let i=0,len=playlist.length;i<len;i++){
+  for (let i = 0, len = newData.length;i<len;i++){
      await playCollection.add({
        data:{
-         ...playlist[i],
+         ...newData[i],
          creatTime:db.serverDate()
        }
      }).then(res=>{

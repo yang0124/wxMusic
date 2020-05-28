@@ -1,2 +1,16 @@
-<!--pages/player/player.wxml-->
-<text>pages/player/player.wxml</text>
+<view class="player-container" style="background:url({{picUrl}}) center/cover no-repeat"></view>
+<view class="mask"></view>
+
+<view class="info">
+  <view class="disc {{isPlay?'play':''}}">
+    <image class="playimg rotation {{isPlay?'':'rotationStop'}}" src="{{picUrl}}"></image>
+  </view>
+</view>
+
+<view class="control">
+  <text class="iconfont icon-shangyishoushangyige"></text>
+  <text class="iconfont {{isPlay?'icon-zanting':'icon-bofang'}}" bindtap="toTogglePlay"></text>
+  <text class="iconfont icon-xiayishou"></text>
+</view>
+
+

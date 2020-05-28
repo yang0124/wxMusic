@@ -1,4 +1,5 @@
 /**app.wxss**/
+@import 'iconfont.wxss';
 .container {
   display: flex;
   flex-direction: column;
@@ -17,7 +18,6 @@ button:focus{
 button::after{
   border: none;
 }
-
 
 page {
   background: #f6f6f6;
