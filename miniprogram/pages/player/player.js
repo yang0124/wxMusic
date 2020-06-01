@@ -3,6 +3,7 @@ let playerList=[]//这是拿到歌曲的信息
 let playIndex=0 //这是拿到当前播放的信息
 //获取全局唯一的音频管理器
 const backgroundAudioManager = wx.getBackgroundAudioManager()
+
 Page({
 
   /**
@@ -11,31 +12,38 @@ Page({
   data: {
     picUrl:"",
     isPlay:false,
+    isLyric:false,
+    lyric:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+  
     playerList = wx.getStorageSync('musiclist')
+   
     playIndex = parseInt(options.playIndex) 
-    console.log(options.musicId)
+ 
     this.loadmusicList(options.musicId)
   },
 
   loadmusicList(musicId){
+    backgroundAudioManager.stop()
+    //这是得到当前播放的歌曲的信息
     let music = playerList[playIndex]
-    console.log(music)
+   //这是设置歌曲的标题
    wx.setNavigationBarTitle({
      title: music.name ,
    })
+    //这是得到背景图片的设置
    this.setData({
      picUrl: music.al.picUrl
    })
    wx.showLoading({
      title: '歌曲正在加载中',
    })
+   //这是调用云函数，得到歌曲的相关信息
    wx.cloud.callFunction({
      name:"music",
      data:{
@@ -52,8 +60,26 @@ Page({
       this.setData({
         isPlay:true
       })
+   }),
+   //这是调用云函数，得到歌词相关的内容
+   wx.cloud.callFunction({
+     name:"music",
+     data:{
+       musicId,
+       $url:"lyric"
+     }
+   }).then(res => {
+     let lyric="暂无歌词";
+     if (res.result.lrc){
+       lyric=res.result.lrc.lyric
+     }
+     this.setData({
+       lyric
+     })
    })
+
   },
+  //这是播放按键的切换功能
   toTogglePlay(){
     //说明正在播放
     if (this.data.isPlay){
@@ -63,6 +89,29 @@ Page({
     }
     this.setData({
       isPlay:!this.data.isPlay
+    })
+  },
+  //点击播放上一首歌
+  onPrev(){
+    playIndex--
+    if (playIndex<0){
+      playIndex = playerList.length -1
+    }
+    console.log(playIndex)
+    this.loadmusicList(playerList[playIndex].id)
+  },
+  onNext(){
+    playIndex++
+    if (playIndex == playerList.length ){
+      playIndex=0
+    }
+    console.log(playIndex)
+    this.loadmusicList(playerList[playIndex].id)
+  },
+  //这是改变歌曲的显示和隐藏
+  onChangeLyric(){
+    this.setData({
+      isLyric:!this.data.isLyric
     })
   },
   /**
