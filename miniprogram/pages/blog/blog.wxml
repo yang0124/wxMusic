@@ -1,2 +1,22 @@
-<!--miniprogram/pages/blog/blog.wxml-->
-<text>miniprogram/pages/blog/blog.wxml</text>
+<view class="container">
+  <!-- 这是头部的部分 -->
+  <view class="header">
+      <view class="publish" bindtap="onPublish">
+          <i class="iconfont icon-fabu"> </i>
+      </view>
+      <view class="search">
+          <x-search iconfont="iconfont" icon-sousuo="icon-sousuo"/>
+      </view>
+  </view>
+
+  <!-- 这是底部的部分 -->
+  <x-bottom-model modelShow="{{modelShow}}">
+        <view slot="slot2">
+            <view>插槽1</view>
+            <view>按钮</view>
+        </view>
+        <view slot="slot1">
+            <view>插槽2</view>
+        </view> 
+  </x-bottom-model>
+</view>

@@ -2,17 +2,17 @@
 <view class="mask"></view>
 
 <view class="info" >
-  <view class="disc {{isPlay?'play':''}}" wx:if="{{!isLyric}}" bindtap="onChangeLyric">
+  <view class="disc {{isPlay?'play':''}}" hidden="{{isLyric}}" bindtap="onChangeLyric">
     <image class="playimg rotation {{isPlay?'':'rotationStop'}}" src="{{picUrl}}"></image>
   </view>
 
 <!-- 这是进度条的部分 -->
 <view class="process-bar">
-  <x-process-bar bind:NextMusic="onNext"/>
+  <x-process-bar bind:NextMusic="onNext" bind:timeUpdata="timeUpdata"  isSame="{{isSame}}"/>
 </view>
 
 <!-- 这是歌曲的显示部分 -->
-<x-lyric wx:if="{{isLyric}}" bindtap="onChangeLyric" lyric="{{lyric}}"/>
+<x-lyric isLyric="{{isLyric}}" bindtap="onChangeLyric" lyric="{{lyric}}" id="lyric"/>
 
 <!-- 这是控制面板部分 -->
 <view class="control">

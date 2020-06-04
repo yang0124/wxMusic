@@ -10,10 +10,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    isSame:Boolean
   },
   lifetimes: {
     ready(){
+      console.log(this.properties.isSame)
+      if(this.properties.isSame && this.data.showTime.totalTime =="00:00"){
+        this.setTime()
+      }
       this.getMovableDis(),
       this.bindBGM()
     }
@@ -71,6 +75,7 @@ Component({
       backgroundAudioManager.onWaiting(()=>{
 
       })
+      //在歌曲可以播放的时候把总时间设置上
       backgroundAudioManager.onCanplay(()=>{
         let duration = backgroundAudioManager.duration
         if (duration===undefined){
@@ -87,6 +92,7 @@ Component({
           let currentTime = backgroundAudioManager.currentTime //这是当前播放的时间
           duration = backgroundAudioManager.duration //这是播放的总时间
           let currentFtm = this.dataForm(currentTime)
+          //这是在去重，在同一秒内只进行一次移动的操作
           let sec = currentTime.toString().split(".")[0]
           if (sec != currentSec) {
             this.setData({
@@ -95,10 +101,16 @@ Component({
               ["showTime.currentTime"]: `${currentFtm.min}:${currentFtm.secn}`
             })
             currentSec = sec
+            //联动歌词
+            this.triggerEvent("timeUpdata", {
+              currentTime
+            })
           }
+         
         }
       
       })
+      //这是在一首歌播放完成后，播放下一首歌
       backgroundAudioManager.onEnded(()=>{
         //这是微信之间的子父通信
           this.triggerEvent("NextMusic")
@@ -108,7 +120,6 @@ Component({
     setTime(){
       duration = backgroundAudioManager.duration;
       const dataFtm=this.dataForm(duration)
-      console.log(dataFtm)
       this.setData({
         ["showTime.totalTime"]: `${dataFtm.min}:${dataFtm.secn}`
       })

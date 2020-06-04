@@ -3,7 +3,7 @@ let playerList=[]//这是拿到歌曲的信息
 let playIndex=0 //这是拿到当前播放的信息
 //获取全局唯一的音频管理器
 const backgroundAudioManager = wx.getBackgroundAudioManager()
-
+const app = getApp()
 Page({
 
   /**
@@ -13,7 +13,8 @@ Page({
     picUrl:"",
     isPlay:false,
     isLyric:false,
-    lyric:""
+    lyric:"",
+    isSame:false
   },
 
   /**
@@ -29,7 +30,19 @@ Page({
   },
 
   loadmusicList(musicId){
+    if(musicId == app.getPlayMusicId()){
+      this.setData({
+        isSame:true
+      })
+    }else{
+      this.setData({
+        isSame:false
+      })
+       //停止当前播放的歌曲
     backgroundAudioManager.stop()
+    }
+
+   
     //这是得到当前播放的歌曲的信息
     let music = playerList[playIndex]
    //这是设置歌曲的标题
@@ -43,6 +56,7 @@ Page({
    wx.showLoading({
      title: '歌曲正在加载中',
    })
+   app.setPlayMusicId(musicId)
    //这是调用云函数，得到歌曲的相关信息
    wx.cloud.callFunction({
      name:"music",
@@ -52,10 +66,13 @@ Page({
      }
    }).then(res => {
      let result = res.result.data[0]
-     backgroundAudioManager.src = result.url
-     backgroundAudioManager.title = music.name
-      backgroundAudioManager.coverImgUrl = music.al.picUrl
-      backgroundAudioManager.singer =music.ar[0].name
+     if(!this.data.isSame){
+        backgroundAudioManager.src = result.url
+        backgroundAudioManager.title = music.name
+       backgroundAudioManager.coverImgUrl = music.al.picUrl
+       backgroundAudioManager.singer =music.ar[0].name
+     }
+    
       wx.hideLoading()
       this.setData({
         isPlay:true
@@ -69,9 +86,11 @@ Page({
        $url:"lyric"
      }
    }).then(res => {
+    
      let lyric="暂无歌词";
-     if (res.result.lrc){
+     if (res.result.lrc.lyric){
        lyric=res.result.lrc.lyric
+       console.log(11111)
      }
      this.setData({
        lyric
@@ -113,6 +132,11 @@ Page({
     this.setData({
       isLyric:!this.data.isLyric
     })
+  },
+  //这是进度条的当前时间传递到歌曲组件中
+  timeUpdata(event){
+    this.selectComponent("#lyric").updata(event.detail.currentTime)
+    // console.log("111")
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -1,3 +1,9 @@
-<scroll-view>
-  <view>这是歌词组件</view>
+<scroll-view class="lyric-scroll" scroll-y="true" scroll-top="{{scrollTop}}" scroll-with-animation="true" hidden="{{!isLyric}}">
+  <view class="lyric-panel">
+      <block wx:for="{{lrcList}}" wx:key="item" >
+      <view class="lyric {{nowLyricIndex==index?'high-lyric':''}}">
+          {{item.lrc}}
+      </view> 
+    </block>
+  </view>
 </scroll-view>
