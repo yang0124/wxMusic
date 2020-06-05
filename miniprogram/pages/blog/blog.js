@@ -8,8 +8,35 @@ Page({
     modelShow:false
   },
   onPublish(){
-      this.setData({
-        modelShow:true
+    //这是获得用户的授权信息
+     wx.getSetting({
+      success:res=>{
+        if(res.authSetting["scope.userInfo"]){
+          wx.getUserInfo({
+            success: (res) => {
+              this.loginsuceess({
+                detail:res.userInfo
+              })
+            },
+          })
+        }else{
+          this.setData({
+            modelShow:true
+          })
+        }
+      }
+     })
+  },
+  loginsuceess(event){
+    console.log(event)
+    let detail =event.detail
+    wx.navigateTo({
+      url: `../blog-edit/blog-edit?avatarUrl=${detail.avatarUrl}&&nickName=${detail.nickName}`,
+    })
+  },
+  loginfail(){
+      wx.showModal({
+        title:'只有授权才能发布'
       })
   },
   /**

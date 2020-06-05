@@ -1,0 +1,5 @@
+<x-bottom-model modelShow="{{modelShow}}">
+    <view slot="modelLogin" >
+      <button class="login" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录授权</button>
+    </view>
+</x-bottom-model>

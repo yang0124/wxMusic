@@ -10,13 +10,7 @@
   </view>
 
   <!-- 这是底部的部分 -->
-  <x-bottom-model modelShow="{{modelShow}}">
-        <view slot="slot2">
-            <view>插槽1</view>
-            <view>按钮</view>
-        </view>
-        <view slot="slot1">
-            <view>插槽2</view>
-        </view> 
-  </x-bottom-model>
+  <x-login modelShow="{{modelShow}}" bind:loginsuceess="loginsuceess"  bind:loginfail="loginfail">
+        
+  </x-login>
 </view>

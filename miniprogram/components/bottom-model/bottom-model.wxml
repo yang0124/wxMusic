@@ -1,7 +1,6 @@
 <view class="model" hidden="{{!modelShow}}">
     <view class="panel" >
       <i class="iconfont icon-shanchu shanchu" bindtap="onClose"></i>
-      <slot name="slot1"></slot>
-      <slot name="slot2"></slot>
+      <slot name="modelLogin"></slot>
     </view>   
 </view>

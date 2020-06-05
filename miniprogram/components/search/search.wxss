@@ -28,6 +28,3 @@
   transform: translate(16rpx,-50%);
   color: #9f9f9f;
 }
-button:not([size='mini']) {
-    width: 150rpx;
-}
